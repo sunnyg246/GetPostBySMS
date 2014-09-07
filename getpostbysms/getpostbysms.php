@@ -5,7 +5,7 @@ Plugin URI: http://business.txtweb.com/user/apps/getpostbysms
 Description: Allow users to get your post as SMS
 Version: 1.0
 Author: Sunny Gulati
-Author URI: http://business.txtweb.com/user/profile?userid=20309
+Author URI: http://business.txtweb.com/profile/id-SunnyGulati-20309
 License: GPL2
 */
 
@@ -83,8 +83,8 @@ function getPostBySMS_plugin_install() {
     add_option( 'getPostBySMS_page_id', $the_page_id );
 	add_option("getPostBySMS_key", ' ', 'Please Enter Service Meta Key', 'yes');
 	add_option("getPostBySMS_name", ' ', 'Please Enter Service Name', 'yes');
-add_option("getPostBySMS_color", '#7F9A42', 'Background color for front end', 'yes');
-add_option("getPostBySMS_textColor", '#FFFFFF', 'Text color for front end', 'yes');
+add_option("getPostBySMS_color", '7F9A42', 'Background color for front end', 'yes');
+add_option("getPostBySMS_textColor", 'FFFFFF', 'Text color for front end', 'yes');
 }
 
 function getPostBySMS_plugin_remove() {
@@ -129,7 +129,7 @@ add_action ('template_redirect', 'template_redirect_to_winning_page');
 
 	function GetPostBySMSContent($content){
 	global $post;
-	$msg = "<div id='GetPostBySMS' style='margin-top:10px;background-color:". get_option('getPostBySMS_color').";color:". get_option('getPostBySMS_textColor').";padding:10px;'><strong>Get This POST</strong> : SEND ". get_option('getPostBySMS_name')." ".$post->ID." to 92433 42000 </div>";
+	$msg = "<div id='GetPostBySMS' style='margin-top:10px;background-color:#". get_option('getPostBySMS_color').";color:#". get_option('getPostBySMS_textColor').";padding:10px;'><strong>Get This POST</strong> : SEND @". get_option('getPostBySMS_name')." ".$post->ID." to 51115 </div>";
 		return $content . $msg;
 	}
 	
@@ -199,22 +199,83 @@ function GetPostBySMS_admin_print_form() {
 <div class="wrap">
 <?php screen_icon(); ?>
 <h2>Get Post By SMS</h2>
-<p>
 <form method="post" action="">
-Service App Key &nbsp; : <input name="getPostBySMS_key" type="text" id="getPostBySMS_key"
-value="<?php echo get_option('getPostBySMS_key'); ?>" /><br />
-Service Name &nbsp; &nbsp;&nbsp; : <input name="getPostBySMS_name" type="text" id="getPostBySMS_name"
-value="<?php echo get_option('getPostBySMS_name'); ?>" /><br />
-BG Color &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <input name="getPostBySMS_color" type="text" id="getPostBySMS_color"
-value="<?php echo get_option('getPostBySMS_color'); ?>" /><br />
-Text Color &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; : <input name="getPostBySMS_textColor" type="text" id="getPostBySMS_textColor"
-value="<?php echo get_option('getPostBySMS_textColor'); ?>" /><br /><br />
-<input type="submit" name="submit" value="Save Changes" />
-</form><br /><br /><br />
-To get the Service Key & Name Register Here :- <a href="http://developer.txtweb.com/">http://developer.txtweb.com/</a>
+<table class="form-table">
+<tbody><tr>
+
+<th scope="row"><label for="fname">Service App Key<span> *</span>: </label></th>
+        <td><input name="getPostBySMS_key" type="text" id="getPostBySMS_key" class="regular-text" value="<?php echo get_option('getPostBySMS_key'); ?>" />
+		</td> 
+</tr>
+<tr>
+
+		<th scope="row"><label for="fname">Service Name<span> *</span>: </label></th>
+        <td><input name="getPostBySMS_name" type="text" class="regular-text" id="getPostBySMS_name"
+value="<?php echo get_option('getPostBySMS_name'); ?>" /></td> 
+</tr>
+<tr>
+
+
+		<th scope="row"><label for="fname">BG Color<span> *</span>: </label></th>
+        <td><input name="getPostBySMS_color" class="regular-text" type="text" id="getPostBySMS_color"
+value="<?php echo get_option('getPostBySMS_color'); ?>" /></td> 
+</tr>
+<tr>
+		<th scope="row"><label for="fname">Text Color<span> *</span>: </label></th>
+        <td><input name="getPostBySMS_textColor" class="regular-text" type="text" id="getPostBySMS_textColor"
+value="<?php echo get_option('getPostBySMS_textColor'); ?>" /></td> 
+</tr>
+</table>
+<input class='button-primary' type='submit' name='submit' value='<?php _e('Save Options'); ?>' id='submitbutton' />	
+</form>
+<br /><br />
+To get the Service Key & Service Name Register Here :- <a href="http://developer.txtweb.com/">http://developer.txtweb.com/</a>
 <br /> Its Free :)
-</p>
 </div>
 <?php
 }
+
+
+function add_jquery_data() {
+    global $parent_file;
+
+    if ( isset( $_GET['page'] ) && $_GET['page'] == 'get-post-by-sms') {
+		$url = plugins_url().'/getpostbysms/js/colpick.js';
+		$url_css = plugins_url().'/getpostbysms/css/colpick.css';
+		echo '<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>';
+		echo '<script type="text/javascript" src="'. $url . '"></script>';
+		echo '<link rel="stylesheet" href="'. $url_css . '">';
+		echo '<style>#getPostBySMS_color {margin:0;padding:0;border:0;width:80px;height:20px;border-right:20px solid #'. get_option('getPostBySMS_color') .';line-height:20px;}</style>';
+		echo '<style>#getPostBySMS_textColor {margin:0;padding:0;border:0;width:80px;height:20px;border-right:20px solid #'. get_option('getPostBySMS_textColor') .';line-height:20px;}</style>';
+		echo '<script>$(\'#getPostBySMS_color\').colpick({';
+		echo 'layout:\'hex\',';
+		echo 'submit:0,';
+		echo 'colorScheme:\'dark\',';
+		echo 'onChange:function(hsb,hex,rgb,el,bySetColor) {';
+		echo '$(el).css(\'border-color\',\'#\'+hex);';
+		echo 'if(!bySetColor) $(el).val(hex)';
+		echo '}';
+		echo '}).keyup(function(){';
+		echo '$(this).colpickSetColor(this.value)';
+		echo '})</script>';
+		echo '<script>$(\'#getPostBySMS_textColor\').colpick({';
+		echo 'layout:\'hex\',';
+		echo 'submit:0,';
+		echo 'colorScheme:\'dark\',';
+		echo 'onChange:function(hsb,hex,rgb,el,bySetColor) {';
+		echo '$(el).css(\'border-color\',\'#\'+hex);';
+		echo 'if(!bySetColor) $(el).val(hex)';
+		echo '}';
+		echo '}).keyup(function(){';
+		echo '$(this).colpickSetColor(this.value)';
+		echo '})</script>';
+    }
+}
+
+add_filter('admin_footer', 'add_jquery_data');
+
+
+
+
+
 ?>

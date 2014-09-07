@@ -35,11 +35,32 @@ echo  get_post_by_sms($_REQUEST['txtweb-message']);
 }
 else
 {
-?>
-Get POSTID from SMSTextMsgs.com <br /><br /> To Get a POST : <form action='' class='txtweb-form' method='get'>
-		SMSID<input type='text' name='txtweb-message' />
-		<input type='submit' name='submit' />
-		</form>
-<?php } ?>
+if($_REQUEST['smsid'])
+{
+	$cur_id = $_REQUEST['smsid'];
+	$new_id = $cur_id - 1;
+	while($new_id != 0)
+	{
+		if(get_post_type($new_id) == "post" && get_post_by_sms($new_id) != "No post found.")
+		{
+			break;
+		}
+		else 
+			$new_id = $new_id - 1;
+	}
+		echo  get_post_by_sms($cur_id);  ?>
+ <br /><br />
+<a href="<?php echo get_site_url(); ?>/get-post-by-sms/?smsid=<?php echo $new_id ?>" class="txtweb-menu-for"> Next Post </a>	
+<?php	
+} else {
+	$last = wp_get_recent_posts( '2');
+	$last_id = $last['0']['ID'];
+	echo  get_post_by_sms($last_id);  ?>
+ <br /><br />
+<a href="<?php echo get_site_url(); ?>/get-post-by-sms/?smsid=<?php echo $last['1']['ID'] ?>" class="txtweb-menu-for"> Next Post </a>
+<?php
+}
+
+ } ?>
 </body>
 </html>
