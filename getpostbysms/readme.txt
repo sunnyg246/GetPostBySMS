@@ -2,7 +2,14 @@ Give the best advantage for your visitors to get your post by SMS for free.
 
 This Wordpress Plugin allow your visitors to get your any post by sms and read using his mobile.
 
-If any of your visitors wants to get any particular Post from your website, He/She just sms @Your_Service_Name PostID to 92433 42000 and get it on their mobile.
+
+How to use this Service
+User Just SMS @<your Service Keyword> and get new post Daily.
+
+Not only this, if user wants to get any particular post, he can just sms @<your Service Keyword> POSTID to get any Post of his choice.
+
+
+User can visit your website to get the POSTID of the POST he wants. 
 
 
 For Setup Visit : https://www.youtube.com/watch?v=WbF7n1k6VaA
